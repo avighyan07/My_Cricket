@@ -1,0 +1,214 @@
+
+{% block content %}
+<style>
+    body {
+        background-color: black;
+        color: white;
+        font-family: Arial, sans-serif;
+    }
+    .home-link {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .home-link a {
+        color: gold;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        border: 2px solid gold;
+        transition: 0.3s;
+    }
+
+    .home-link a:hover {
+        background-color: gold;
+        color: black;
+    }
+
+    .search-container button {
+        background-color: gold;
+        color: black;
+        border: none;
+        padding: 12px 20px;
+        font-size: 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+        margin: 10px;
+    }
+
+    .search-container button:hover {
+        background-color: darkgoldenrod;
+    }
+
+
+    .search-container input {
+        width: 300px;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+    }
+
+    .player-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .player-card {
+        background-color: #1c1c1c;
+        border-radius: 10px;
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0px 0px 10px gold;
+        cursor: pointer;
+    }
+
+    .player-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .player-info h3 {
+        color: gold;
+        margin: 10px 0;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(25, 24, 24, 0.8);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: #1c1c1c;
+        padding: 20px;
+        border-radius: 10px;
+        width: 450px;
+        text-align: center;
+        box-shadow: 0px 0px 15px gold;
+        position: relative;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 25px;
+        cursor: pointer;
+        color: gold;
+    }
+</style>
+<div class="home-link">
+    <p><a href="{{ url_for('home') }}">🏠 Home</a></p>
+</div>
+
+
+<div class="search-container">
+    <form method="get">
+        <input type="text" name="search" placeholder="Search Player..." value="{{ search_query }}">
+        <br>
+        <button type="submit">🔍 Search</button>
+        <button type="button" onclick="resetSearch()">🔄 Reset</button>
+    </form>
+</div>
+
+<div class="player-grid">
+    {% for player in players %}
+    <div class="player-card" onclick="openModal(
+        '{{ player.Player }}',       
+        '{{ player.COUNTRY }}',     
+        '{{ player.TEAM }}',      
+        '{{ player.Age }}', 
+        '{{ player.Paying_Role }}',   
+        '{{ player.Mat }}', 
+        '{{ player.Inns }}', 
+        '{{ player.Runs }}', 
+        '{{ player.BF }}', 
+        '{{ player.HS }}', 
+        '{{ player.Avg }}', 
+        '{{ player.SR }}', 
+        '{{ player.B_TWkts }}', 
+        '{{ player.B_Avg }}',  
+        '{{ player.B_Econ }}', 
+        '{{ player.SOLD_PRICE }}'  
+    )">
+        <h3>{{ player.Player }}</h3>
+        <p>{{ player.TEAM }}</p>
+        <p>{{ player.Country }}</p>
+       
+    </div>
+    {% endfor %}
+</div>
+
+<div id="playerModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        
+        <h3 id="modalName"></h3>
+        <p><strong>Country:</strong> <span id="modalCountry"></span></p>
+        <p><strong>Team:</strong> <span id="modalTeam"></span></p>
+        <p><strong>Age:</strong> <span id="modalAge"></span></p>
+        <p><strong>Playing Role:</strong> <span id="modalRole"></span></p>
+        <p><strong>Matches:</strong> <span id="modalMat"></span></p>
+        <p><strong>Innings:</strong> <span id="modalInns"></span></p>
+        <p><strong>Runs:</strong> <span id="modalRuns"></span></p>
+        <p><strong>Balls Faced:</strong> <span id="modalBF"></span></p>
+        <p><strong>Highest Score:</strong> <span id="modalHS"></span></p>
+        <p><strong>Batting Avg:</strong> <span id="modalAvg"></span></p>
+        <p><strong>Strike Rate:</strong> <span id="modalSR"></span></p>
+        <p><strong>Wickets:</strong> <span id="modalWkts"></span></p>
+        <p><strong>Bowling Avg:</strong> <span id="modalBAvg"></span></p>
+        <p><strong>Economy:</strong> <span id="modalEcon"></span></p>
+        <p><strong>Sold Price:</strong> <span id="modalPrice"></span></p>
+    </div>
+</div>
+
+<script>
+    function openModal(name, country,  team, age,  role, mat, inns, runs, bf, hs, avg, sr, wkts, bAvg, econ, price) {
+      
+        document.getElementById('modalName').innerText = name;
+        document.getElementById('modalCountry').innerText = country;
+        document.getElementById('modalTeam').innerText = team;
+        document.getElementById('modalAge').innerText = age;
+        document.getElementById('modalRole').innerText = role;
+        document.getElementById('modalMat').innerText = mat;
+        document.getElementById('modalInns').innerText = inns;
+        document.getElementById('modalRuns').innerText = runs;
+        document.getElementById('modalBF').innerText = bf;
+        document.getElementById('modalHS').innerText = hs;
+        document.getElementById('modalAvg').innerText = avg;
+        document.getElementById('modalSR').innerText = sr;
+        document.getElementById('modalWkts').innerText = wkts;
+        document.getElementById('modalBAvg').innerText = bAvg;
+        document.getElementById('modalEcon').innerText = econ;
+        document.getElementById('modalPrice').innerText = price;
+
+        document.getElementById('playerModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('playerModal').style.display = 'none';
+    }
+
+    function resetSearch() {
+        window.location.href = "cricketer_info";
+    }
+</script>
+
+{% endblock %}

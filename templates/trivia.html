@@ -1,0 +1,178 @@
+{% block content %}
+<style>
+    body {
+        background-color: black;
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    .home-link {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .home-link a {
+        color: gold;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        border: 2px solid gold;
+        transition: 0.3s;
+    }
+
+    .home-link a:hover {
+        background-color: gold;
+        color: black;
+    }
+    .quiz-container {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        background-color: #1c1c1c;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px gold;
+    }
+
+    .question {
+        margin-bottom: 15px;
+        font-size: 18px;
+        color: gold;
+    }
+
+    .options label {
+        display: block;
+        background: #333;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .options input {
+        display: none;
+    }
+
+    .options label:hover {
+        background: gold;
+        color: black;
+    }
+
+    .options label.selected {
+        background: gold;
+        color: black;
+        font-weight: bold;
+    }
+
+    .submit-btn {
+        background-color: gold;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+    
+
+    .score {
+        margin-top: 20px;
+        font-size: 20px;
+        color: gold;
+    }
+    .button-container {
+        display: flex;
+        justify-content: flex-end; /* Pushes button to the right */
+        
+    }
+    .reset-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: gold;
+        color: black;
+        border: none;
+        padding: 8px 15px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    
+</style>
+<div class="home-link">
+    <p><a href="{{ url_for('home') }}">🏠 Home</a></p>
+</div>
+
+<div class="quiz-container">
+    <h2>IPL Trivia Quiz</h2>
+
+    <form id="quizForm">
+        {% for i in range(questions|length) %}
+    <div class="question">
+        <p>{{ i+1 }}. {{ questions[i].question }}</p>
+
+        <div class="options">
+            {% for option in questions[i].options %}
+                <label onclick="highlightOption(this)">
+                    <input type="radio" name="q{{ i }}" value="{{ option }}"> {{ option }} <br>
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+                </div>
+            </div>
+
+           
+    
+        <button type="button" class="submit-btn" onclick="calculateScore()">Submit</button>
+        <button type="button" class="reset-btn" onclick="resetSearch()">🔄 Reset</button>
+
+    </form>
+
+    <div class="score" id="scoreDisplay"></div>
+</div>
+
+<script>
+    function highlightOption(selectedLabel) {
+        let parentDiv = selectedLabel.parentElement;
+        let allLabels = parentDiv.querySelectorAll("label");
+        
+        allLabels.forEach(label => label.classList.remove("selected"));
+        selectedLabel.classList.add("selected");
+    }
+    function calculateScore() {
+        let correctAnswers = {{ correct_answers | tojson }};
+        let totalQuestions = correctAnswers.length;
+        let score = 0;
+        let selectedAnswers = new Array(totalQuestions).fill(null); // Ensure order is maintained
+    
+        for (let i = 0; i < totalQuestions; i++) {
+            let selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selectedOption) {
+                selectedAnswers[i] = selectedOption.value.trim();
+            }
+        }
+    
+        for (let i = 0; i < totalQuestions; i++) {
+            if (selectedAnswers[i] === correctAnswers[i].trim()) {
+                score++;
+            }
+        }
+    
+        console.log("User Answers:", selectedAnswers);
+        console.log("Correct Answers:", correctAnswers);
+    
+        document.getElementById("scoreDisplay").innerHTML = `Your Score: ${score} / ${totalQuestions}`;
+    }
+    function resetSearch() {
+        window.location.href = "quiz_trivia";
+    }
+    
+</script>
+
+{% endblock %}

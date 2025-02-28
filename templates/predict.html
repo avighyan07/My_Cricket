@@ -1,0 +1,224 @@
+
+
+{% block content %}
+<div class="welcome-container">
+    <h1>Victory Predictor 🏅🔢</h1>
+    <p>Enter the details below to get your match prediction.</p>
+</div>
+
+<form action="" method="post" class="predict-form">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        {{ form.batting_team.label }}
+        {{ form.batting_team }}
+    </div>
+
+    <div class="form-group">
+        {{ form.bowling_team.label }}
+        {{ form.bowling_team }}
+    </div>
+
+    <div class="form-group">
+        {{ form.city.label }}
+        {{ form.city }}
+    </div>
+
+    <div class="form-group">
+        {{ form.runs_left.label }}
+        {{ form.runs_left }}
+    </div>
+
+    <div class="form-group">
+        {{ form.balls_left.label }}
+        {{ form.balls_left }}
+    </div>
+
+    <div class="form-group">
+        {{ form.wickets.label }}
+        {{ form.wickets }}
+    </div>
+
+    <div class="form-group">
+        {{ form.total_runs_x.label }}
+        {{ form.total_runs_x }}
+    </div>
+
+    <div class="form-group">
+        {{ form.crr.label }}
+        {{ form.crr }}
+    </div>
+
+    <div class="form-group">
+        {{ form.rrr.label }}
+        {{ form.rrr }}
+    </div>
+
+    <button type="submit">Predict</button>
+
+    <div class="result">
+        <strong>Prediction Result:</strong>
+        <p>{{ output }}</p>
+    </div>
+
+    <div class="home-link">
+        <p><a href="{{ url_for('home') }}">🏠 Home</a></p>
+    </div>
+    
+</form>
+
+<style>
+
+
+    /* General Page Styling */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #000; /* Black background */
+        color: #FFD700; /* Gold text */
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    .home-link {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .home-link a {
+        color: gold;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        border: 2px solid gold;
+        transition: 0.3s;
+    }
+
+    .home-link a:hover {
+        background-color: gold;
+        color: black;
+    }
+
+    
+    /* Welcome Message Styling */
+    .welcome-container {
+        text-align: center;
+        background: #222; /* Dark grey for contrast */
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5); /* Gold glow effect */
+        width: 50%;
+        animation: fadeIn 1s ease-in-out;
+    }
+    
+    .welcome-container h1 {
+        color: #FFD700; /* Gold */
+        font-size: 32px;
+        margin-bottom: 5px;
+    }
+    
+    .welcome-container p {
+        font-size: 16px;
+        color: #ccc; /* Light grey */
+    }
+    
+    /* Form Styling */
+    .predict-form {
+        background: #222; /* Dark background */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(255, 215, 0, 0.5); /* Gold shadow */
+        width: 400px;
+        text-align: center;
+        animation: fadeIn 1s ease-in-out;
+    }
+    
+    .form-group {
+        margin-bottom: 10px;
+    }
+    
+    label {
+        font-weight: bold;
+        display: block;
+        text-align: left;
+        margin-bottom: 5px;
+        color: #FFD700; /* Gold */
+    }
+    
+    input, select {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #FFD700; /* Gold border */
+        border-radius: 5px;
+        background: black; /* Black input background */
+        color: #FFD700; /* Gold text */
+        transition: 0.3s ease-in-out;
+    }
+    
+    input:focus, select:focus {
+        border-color: #FFA500; /* Orange-Gold highlight */
+        box-shadow: 0 0 5px rgba(255, 165, 0, 0.8);
+    }
+    
+    /* Button Styling */
+    button {
+        background: #FFD700; /* Gold button */
+        color: black;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    button:hover {
+        background: #FFA500; /* Darker gold on hover */
+    }
+    
+    /* Prediction Result Styling */
+    .result {
+        margin-top: 10px;
+        font-size: 18px;
+        color: #FFD700; /* Gold */
+    }
+    
+    /* Home Link Styling */
+    .home-link {
+        margin-top: 10px;
+    }
+    
+    .home-link a {
+        color: #FFD700;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    .home-link a:hover {
+        text-decoration: underline;
+        color: #FFA500;
+    }
+    
+    /* Animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+</style>
+{% endblock content %}

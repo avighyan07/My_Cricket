@@ -1,0 +1,135 @@
+
+
+{% block content %}
+<style>
+    body {
+        background-color: black;
+        color: white;
+    }
+    /* Form Container */
+    .form-container {
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Label Styling */
+    label {
+        font-weight: bold;
+        color: black;
+    }
+
+    /* Input Fields */
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 2px solid #FFD700;
+        border-radius: 5px;
+    }
+
+    /* Error Message Styling */
+    .error {
+        color: red;
+        font-size: 0.9rem;
+    }
+
+    /* Checkbox Styling */
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+        
+    }
+
+    .checkbox-container input {
+        margin-left: 300px;
+
+    }
+
+    /* Button Styling */
+    .btn-gold {
+        background-color: #FFD700;
+        color: black;
+        font-weight: bold;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-gold:hover {
+        background-color: #FFC107;
+    }
+    .form-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 15px;
+    }
+
+    .form-links a {
+        display: block;
+        width: 200px;
+        text-align: center;
+        background: #222;
+        color: #FFD700;
+        font-weight: bold;
+        padding: 10px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: 0.3s ease-in-out;
+        box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    }
+
+    .form-links a:hover {
+        background: #333;
+        text-decoration: none;
+        box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+    }
+
+</style>
+
+<div class="form-container">
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+
+        <div>
+            {{ form.email.label }}<br>
+            {{ form.email(class="form-control") }}
+            {% for error in form.email.errors %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <br>
+
+        <div>
+            {{ form.password.label }}<br>
+            {{ form.password(class="form-control") }}
+            {% for error in form.password.errors %}
+                <div class="error">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <br>
+
+        <div class="checkbox-container">
+            {{ form.remember_me }} {{ form.remember_me.label }}
+        </div>
+        <br>
+
+        <div>
+            {{ form.submit(class="btn btn-gold") }}
+        </div>
+        <br>
+
+        <div class="form-links">
+            <p>Not Registered? <a href="{{ url_for('signup') }}">Sign Up</a></p>
+            <p>Redirect to Homepage? <a href="{{ url_for('home') }}">Home</a></p>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

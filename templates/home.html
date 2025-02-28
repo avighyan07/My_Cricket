@@ -1,0 +1,173 @@
+{% block content %}
+<!-- Header Section -->
+<div class="d-flex justify-content-between align-items-center header-container">
+    <h2 class="mb-0 animate-title">🏏 Welcome to <span class="highlight-text">Cricket Insights!</span> 🎯</h2>
+    
+    <!-- Signup & Login Buttons -->
+    <div class="button-container">
+        <a href="{{ url_for('signup') }}" class="btn btn-gold me-2">Sign Up</a>
+        <a href="{{ url_for('login') }}" class="btn btn-gold">Login</a>
+    </div>
+</div>
+
+<!-- Card Section -->
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <!-- IPL Prediction -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-gold animate-card">
+                <img src="{{ url_for('static', filename='download.png') }}" class="card-img-top" alt="IPL Prediction">
+                <div class="card-body">
+                    <h5 class="card-title text-gold">IPL Match Prediction</h5>
+                    <p class="card-text">Predict match outcomes using AI analytics.</p>
+                    <a href="{{ url_for('predict') }}" class="btn btn-gold">Try Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Know Your Cricketers -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-gold animate-card">
+                <img src="{{ url_for('static', filename='download2.jpg') }}" class="card-img-top" alt="Know Your Cricketers">
+                <div class="card-body">
+                    <h5 class="card-title text-gold">Know Your Cricketers</h5>
+                    <p class="card-text">Get insights on your favorite players.</p>
+                    <a href="{{ url_for('cricketer_info') }}" class="btn btn-gold">Explore</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cricket Quiz Trivia -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-gold animate-card">
+                <img src="{{ url_for('static', filename='download3.jpg') }}" class="card-img-top" alt="Cricket Quiz Trivia">
+                <div class="card-body">
+                    <h5 class="card-title text-gold">Cricket Quiz Trivia</h5>
+                    <p class="card-text">Test your cricket knowledge.</p>
+                    <a href="{{ url_for('quiz_trivia') }}" class="btn btn-gold">Play Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Header Section Styling */
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    /* Align Buttons to Right */
+    .button-container {
+        display: flex;
+        gap: 10px;
+    }
+
+    /* Black and Gold Theme */
+    :root {
+        --gold: #FFD700;
+        --black: #000;
+        --dark-grey: #1a1a1a;
+    }
+
+    /* Background and General Styling */
+    body {
+        background-color: var(--black);
+        color: var(--gold);
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Highlighted Text */
+    .highlight-text {
+        color: var(--gold);
+        font-weight: bold;
+    }
+
+    /* Title Animation */
+    .animate-title {
+        animation: fadeInUp 1s ease-in-out;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    /* Cards */
+    .card {
+        background-color: var(--dark-grey);
+        border-radius: 15px;
+        text-align: center;
+        color: var(--gold);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 15px 25px rgba(255, 215, 0, 0.3);
+    }
+
+    /* Card Border */
+    .border-gold {
+        border: 2px solid var(--gold);
+    }
+
+    /* Card Images */
+    .card img {
+        width: 100%;
+        height: auto; /* Keeps the natural aspect ratio */
+        max-height: 200px; /* Limits height */
+        object-fit: contain; /* Ensures the image is fully visible without cropping */
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+    
+    
+
+    /* Buttons */
+    .btn-gold {
+        background-color: var(--gold);
+        color: var(--black);
+        font-weight: bold;
+        border-radius: 25px;
+        padding: 10px 20px;
+        transition: all 0.3s ease-in-out;
+        border: none;
+        display: inline-block;
+        width: auto;
+    }
+
+    .btn-gold:hover {
+        background-color: var(--black);
+        color: var(--gold);
+        border: 2px solid var(--gold);
+    }
+
+    /* Animation */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .btn-gold {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .row .col-md-4 {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
+{% endblock content %}
