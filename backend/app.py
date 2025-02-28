@@ -15,18 +15,20 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_user, logout_user, login_required
 
-from forms import InputForm
-from authenticate_forms import  SignupForm, LoginForm
-from models import db, User  # Import the database and User model
+from backend.forms import InputForm
+from backend.authenticate_forms import SignupForm, LoginForm
+from backend.models import db, User  # Import the database and User model
 
 
-csv_path = os.path.join(os.path.dirname(__file__), '..', 'IPL dataset final.csv')
-df = pd.read_csv(csv_path)
+
+
+df = pd.read_csv('IPL dataset final.csv')
 
 
 
 # Initialize Flask App
-app = Flask(__name__, template_folder="../templates", static_folder="../static")
+app = Flask(__name__, template_folder="templates", static_folder="static")
+
 
 # Configure the App
 app.config["SECRET_KEY"] = "avighyan"
@@ -48,8 +50,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 # Load ML Model
-model_path = os.path.join(os.path.dirname(__file__), "..", "model.joblib")
-model = joblib.load(model_path)
+model = joblib.load("model.joblib")
 
 @app.route('/static/<path:filename>')
 def static_files(filename):
