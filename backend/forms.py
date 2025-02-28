@@ -6,7 +6,7 @@ from wtforms import (
     
     IntegerField,
     SubmitField,
-    Email
+   
 )
 from wtforms.validators import DataRequired
 
